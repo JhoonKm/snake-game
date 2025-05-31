@@ -28,7 +28,7 @@ function drawGameOver() {
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 36px Pretendard, Arial, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('게임 오버', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('으앙 쥬금', canvas.width / 2, canvas.height / 2);
     ctx.font = '20px Pretendard, Arial, sans-serif';
     ctx.fillText('R키를 눌러 다시 시작', canvas.width / 2, canvas.height / 2 + 40);
 }
@@ -55,12 +55,16 @@ function gameLoop() {
     snake.cells.unshift({ x: snake.x, y: snake.y });
     if (snake.cells.length > snake.maxCells) snake.cells.pop();
 
+    // Draw apple
     ctx.fillStyle = 'red';
     ctx.fillRect(apple.x, apple.y, grid-1, grid-1);
 
+    // Draw snake and check collision
     ctx.fillStyle = 'lime';
-    snake.cells.forEach((cell, index) => {
+    for (let i = 0; i < snake.cells.length; i++) {
+        const cell = snake.cells[i];
         ctx.fillRect(cell.x, cell.y, grid-1, grid-1);
+        // Check apple collision
         if (cell.x === apple.x && cell.y === apple.y) {
             snake.maxCells++;
             score++;
@@ -68,12 +72,11 @@ function gameLoop() {
             apple.x = getRandomInt(0, 20) * grid;
             apple.y = getRandomInt(0, 20) * grid;
         }
-        for (let i = index + 1; i < snake.cells.length; i++) {
-            if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                gameOver = true;
-            }
+        // Check self collision (only head)
+        if (i !== 0 && cell.x === snake.cells[0].x && cell.y === snake.cells[0].y) {
+            gameOver = true;
         }
-    });
+    }
 }
 
 document.addEventListener('keydown', function(e) {
