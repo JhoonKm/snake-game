@@ -22,15 +22,28 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function drawSpaceCat() {
+    // Draw a simple ASCII space cat with >_< eyes
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 40px Pretendard, Arial, sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(' /\\_/\\', canvas.width / 2, canvas.height / 2 - 40);
+    ctx.fillText('( >_< )', canvas.width / 2, canvas.height / 2);
+    ctx.fillText(' /   \\', canvas.width / 2, canvas.height / 2 + 40);
+    ctx.restore();
+
+    ctx.font = 'bold 32px Pretendard, Arial, sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText('으앙 쥬금', canvas.width / 2, canvas.height / 2 + 90);
+    ctx.font = '20px Pretendard, Arial, sans-serif';
+    ctx.fillText('R키를 눌러 다시 시작', canvas.width / 2, canvas.height / 2 + 120);
+}
+
 function drawGameOver() {
     ctx.fillStyle = 'rgba(0,0,0,0.6)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 36px Pretendard, Arial, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('으앙 쥬금', canvas.width / 2, canvas.height / 2);
-    ctx.font = '20px Pretendard, Arial, sans-serif';
-    ctx.fillText('R키를 눌러 다시 시작', canvas.width / 2, canvas.height / 2 + 40);
+    drawSpaceCat();
 }
 
 function gameLoop() {
