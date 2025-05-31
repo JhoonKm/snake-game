@@ -23,7 +23,6 @@ function getRandomInt(min, max) {
 }
 
 function drawSpaceCat() {
-    // Draw a simple ASCII space cat with >_< eyes
     ctx.save();
     ctx.textAlign = 'center';
     ctx.font = 'bold 40px Pretendard, Arial, sans-serif';
@@ -57,13 +56,21 @@ function gameLoop() {
         return;
     }
 
+    // Move snake
     snake.x += snake.dx;
     snake.y += snake.dy;
 
-    if (snake.x < 0) snake.x = canvas.width - grid;
-    else if (snake.x >= canvas.width) snake.x = 0;
-    if (snake.y < 0) snake.y = canvas.height - grid;
-    else if (snake.y >= canvas.height) snake.y = 0;
+    // Check wall collision
+    if (
+        snake.x < 0 ||
+        snake.x >= canvas.width ||
+        snake.y < 0 ||
+        snake.y >= canvas.height
+    ) {
+        gameOver = true;
+        drawGameOver();
+        return;
+    }
 
     snake.cells.unshift({ x: snake.x, y: snake.y });
     if (snake.cells.length > snake.maxCells) snake.cells.pop();
